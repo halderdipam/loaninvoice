@@ -50,6 +50,37 @@ module.exports = {
 			},
 		},
 
+		LoanStatusUpdate: {
+			rest: {
+				method: "PUT",
+				path: "/LoanStatusUpdate/:id",
+			},
+			async handler(ctx) {
+				try {
+					const loanStatusApproved = await this.loanStatusApproved(
+						ctx.params.id,
+
+						{
+							...ctx.params,
+						}
+					);
+
+					return {
+						success: true,
+						status: 200,
+
+						message: {
+							payload: loanStatusApproved.ok,
+							message: "Loan status updated",
+						},
+					};
+				} catch (err) {
+					console.log(err);
+					return this.handleErr(err.message);
+				}
+			},
+		},
+
 		// list: {
 		// 	rest: "GET /sell",
 		// },
@@ -79,6 +110,9 @@ module.exports = {
 	events: {},
 
 	methods: {
+		async loanStatusApproved(id, body) {
+			return await SelLoanPro.updateOne({ _id: id }, { $set: body });
+		},
 		handleErr(res) {
 			console.log("res", res);
 			throw res;

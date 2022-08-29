@@ -50,10 +50,10 @@ module.exports = {
 			},
 		},
 
-		LoanProcessUpdate: {
+		LoanProcessApproved: {
 			rest: {
 				method: "PUT",
-				path: "/LoanProcessUpdate/:id",
+				path: "/LoanProcessApproved/:id",
 			},
 			async handler(ctx) {
 				try {
